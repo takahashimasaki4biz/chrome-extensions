@@ -6,10 +6,14 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 function setIcon(tabId, tabUrl) {
-    if (tabUrl && (tabUrl.startsWith('https://www.youtube.com/@') || tabUrl.startsWith('https://www.youtube.com/watch'))) {
-        chrome.action.setIcon({ path: "icons/icon16.png", tabId: tabId });
-    } else {
-        chrome.action.setIcon({ path: "icons/icon16-gray.png", tabId: tabId });
+    try {
+        if (tabUrl && (tabUrl.startsWith('https://www.youtube.com/@') || tabUrl.startsWith('https://www.youtube.com/watch'))) {
+            chrome.action.setIcon({ path: "icons/icon16.png", tabId: tabId });
+        } else {
+            chrome.action.setIcon({ path: "icons/icon16-gray.png", tabId: tabId });
+        }
+    } catch (error) {
+        ;
     }
 }
 chrome.tabs.onActivated.addListener(async function (activeInfo) {
