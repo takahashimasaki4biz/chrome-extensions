@@ -1,8 +1,12 @@
 chrome.action.onClicked.addListener((tab) => {
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['content.js']
-    });
+    try {
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['content.js']
+        });
+    } catch (error) {
+        ;
+    }
 });
 
 function setIcon(tabId, tabUrl) {
@@ -17,8 +21,12 @@ function setIcon(tabId, tabUrl) {
     }
 }
 chrome.tabs.onActivated.addListener(async function (activeInfo) {
-    tab = await chrome.tabs.get(activeInfo.tabId);
-    setIcon(activeInfo.tabId, tab.url);
+    try {
+        tab = await chrome.tabs.get(activeInfo.tabId);
+        setIcon(activeInfo.tabId, tab.url);
+    } catch (error) {
+        ;
+    }
 });
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     setIcon(tabId, tab.url);
